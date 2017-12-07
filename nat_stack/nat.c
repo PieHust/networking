@@ -112,7 +112,10 @@ struct nat_mapping *nat_insert_mapping(struct list_head *mapping_list, u32 inter
 	mapping_entry->internal_port = internal_port;
 	mapping_entry->external_ip = external_ip;
 	mapping_entry->external_port = external_port;
+	
+	pthread_mutex_lock(&nat.lock);
 	list_add_tail(&mapping_entry->list, mapping_list);
+	pthread_mutex_unlock(&nat.lock);
 
 	return mapping_entry;
 }
